@@ -1,0 +1,14 @@
+[Unit]
+Description=Syphon VPN box firewall (VPN devices may reach the Syphon server's web port only)
+Before=wg-quick@syphon0.service
+Wants=network-pre.target
+After=network-pre.target nftables.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/sbin/nft -f /etc/syphon-vpn/firewall.nft
+ExecStop=/bin/sh -c '/usr/sbin/nft delete table inet syphon_vpn 2>/dev/null; /usr/sbin/nft delete table ip syphon_vpn_nat 2>/dev/null; true'
+
+[Install]
+WantedBy=multi-user.target

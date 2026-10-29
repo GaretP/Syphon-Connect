@@ -1,0 +1,32 @@
+[package]
+name = "syphon-vpn"
+version = "0.2.0"
+edition = "2021"
+description = "The Syphon VPN box: fast WireGuard access to a Syphon server from outside the home, on a small always-on device"
+license = "AGPL-3.0-only"
+publish = false
+
+[lib]
+name = "syphon_vpn"
+path = "src/lib.rs"
+
+[[bin]]
+name = "syphon-vpn"
+path = "src/main.rs"
+
+[dependencies]
+anyhow = "=1.0.104"
+base64 = "=0.22.1"
+chacha20poly1305 = "=0.10.1"
+clap = { version = "=4.6.7", features = ["derive"] }
+rand = "=0.8.8"
+serde = { version = "=1.0.229", features = ["derive"] }
+serde_json = "=1.0.151"
+sha2 = "=0.10.9"
+x25519-dalek = { version = "=2.0.1", features = ["static_secrets"] }
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+strip = true

@@ -1,0 +1,16 @@
+[Unit]
+Description=Syphon VPN box welcome desk (a new device's Syphon app puts its own key in place here)
+Requires=wg-quick@syphon0.service
+After=wg-quick@syphon0.service syphon-vpn-firewall.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/syphon-vpn serve
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+ProtectHome=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
